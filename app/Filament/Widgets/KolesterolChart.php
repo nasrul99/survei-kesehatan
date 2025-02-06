@@ -13,21 +13,21 @@ class KolesterolChart extends ChartWidget
 
     protected static ?int $sort = 2;
 
-    protected static ?string $heading = 'Persentase Grafik Pemeriksaan Kolesterol Pegawai';
+    protected static ?string $heading = 'Persentase Grafik Pemeriksaan Kolesterol Masyarakat';
 
 
     protected function getData(): array
     {
-        $periodeId = $this->filters['periode_id'];
+        //$periodeId = $this->filters['periode_id'];
         // Dapatkan total pemeriksaan untuk periode_id tertentu
         $total = DB::table('kolesterol')
-            ->where('periode_id', $periodeId)
+            //->where('periode_id', $periodeId)
             ->count();
 
         // Dapatkan jumlah pemeriksaan berdasarkan status (Rendah, Normal, Tinggi)
         $data = DB::table('kolesterol')
             ->select('status', DB::raw('COUNT(*) as count'))
-            ->where('periode_id', $periodeId)
+            //->where('periode_id', $periodeId)
             ->groupBy('status')
             ->get();
 

@@ -42,11 +42,6 @@ class Rekomendasi extends Model
         return $this->hasMany(AsamUrat::class);
     }
 
-    public function tekanan_darah(): HasMany
-    {
-        return $this->hasMany(TekananDarah::class);
-    }
-
     public function gula_darah(): HasMany
     {
         return $this->hasMany(GulaDarah::class);

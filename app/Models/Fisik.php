@@ -11,16 +11,11 @@ class Fisik extends Model
     use HasFactory;
 
     protected $table = 'fisik';
-    protected $fillable = ['periode_id', 'tanggal', 'pegawai_id', 'berat_badan', 'tinggi_badan', 'imt', 'kondisi_fisik'];
+    protected $fillable = ['tanggal', 'masyarakat_id', 'berat_badan', 'tinggi_badan', 'imt', 'kondisi_fisik'];
 
-    public function pegawai(): BelongsTo
+    public function masyarakat(): BelongsTo
     {
-        return $this->belongsTo(Pegawai::class);
-    }
-
-    public function periode(): BelongsTo
-    {
-        return $this->belongsTo(Periode::class);
+        return $this->belongsTo(Masyarakat::class);
     }
 
     public function rekomendasi(): BelongsTo

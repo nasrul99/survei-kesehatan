@@ -12,9 +12,8 @@ return new class extends Migration {
     {
         Schema::create('tekanan_darah', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('periode_id')->constrained('periode')->onDelete('cascade');
             $table->date('tanggal');
-            $table->foreignId('pegawai_id')->constrained('pegawai')->onDelete('cascade');
+            $table->foreignId('masyarakat_id')->constrained('masyarakat')->onDelete('cascade');
             $table->integer('sistole');
             $table->integer('diastole');
             $table->enum('status', ['Rendah', 'Normal', 'Tinggi']);

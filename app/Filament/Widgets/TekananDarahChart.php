@@ -10,25 +10,25 @@ use Illuminate\Support\Facades\DB;
 class TekananDarahChart extends ChartWidget
 {
     use InteractsWithPageFilters;
-    
-    protected static ?string $heading = 'Persentase Grafik Pemeriksaan Tekanan Darah Pegawai';
+
+    protected static ?string $heading = 'Persentase Grafik Pemeriksaan Tekanan Darah Masyarakat';
     protected static ?int $sort = 2;
 
     protected function getData(): array
     {
         // Ganti ini dengan periode_id yang ingin Anda filter
         //$periodeId = 1;
-        $periodeId = $this->filters['periode_id'];
+        //$periodeId = $this->filters['periode_id'];
 
         // Dapatkan total pemeriksaan untuk periode_id tertentu
         $total = DB::table('tekanan_darah')
-            ->where('periode_id', $periodeId)
+            //->where('periode_id', $periodeId)
             ->count();
 
         // Dapatkan jumlah pemeriksaan berdasarkan status (Rendah, Normal, Tinggi)
         $data = DB::table('tekanan_darah')
             ->select('status', DB::raw('COUNT(*) as count'))
-            ->where('periode_id', $periodeId)
+            //->where('periode_id', $periodeId)
             ->groupBy('status')
             ->get();
 

@@ -13,23 +13,23 @@ class AsamUratChart extends ChartWidget
     protected static ?int $sort = 1;
     //protected int|string|array $columnSpan = 'full'
 
-    protected static ?string $heading = 'Persentase Grafik Pemeriksaan Asam Urat Pegawai';
+    protected static ?string $heading = 'Persentase Grafik Pemeriksaan Asam Urat Masyarakat';
 
     protected function getData(): array
     {
         // Ganti ini dengan periode_id yang ingin Anda filter
         //$periodeId = 1;
-        $periodeId = $this->filters['periode_id'];
+        //$periodeId = $this->filters['periode_id'];
 
         // Dapatkan total pemeriksaan untuk periode_id tertentu
         $total = DB::table('asam_urat')
-            ->where('periode_id', $periodeId)
+            //->where('periode_id', $periodeId)
             ->count();
 
         // Dapatkan jumlah pemeriksaan berdasarkan status (Rendah, Normal, Tinggi)
         $data = DB::table('asam_urat')
             ->select('status', DB::raw('COUNT(*) as count'))
-            ->where('periode_id', $periodeId)
+            //->where('periode_id', $periodeId)
             ->groupBy('status')
             ->get();
 

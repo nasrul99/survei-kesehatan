@@ -12,9 +12,8 @@ return new class extends Migration {
     {
         Schema::create('asam_urat', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('periode_id')->constrained('periode')->onDelete('cascade');
             $table->date('tanggal');
-            $table->foreignId('pegawai_id')->constrained('pegawai')->onDelete('cascade');
+            $table->foreignId('masyarakat_id')->constrained('masyarakat')->onDelete('cascade');
             $table->double('hasil');
             $table->enum('status', ['Rendah', 'Normal', 'Tinggi']);
             $table->foreignId('rekomendasi_id')->nullable()->constrained('rekomendasi')->onDelete('cascade');

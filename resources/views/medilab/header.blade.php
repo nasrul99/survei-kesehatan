@@ -5,8 +5,7 @@
             <div class="contact-info d-flex align-items-center">
                 <marquee>
                     <i class="d-flex align-items-center ms-4"><span>
-                            Selamat Datang di aplikasi SIMANTAN - Sistem Informasi Manajemen Skrining Kesehatan Pegawai
-                            STT-NF & NF Academy
+                            Selamat Datang di Aplikasi SISEHAT - Sistem Informasi Survei Kesehatan Masyarakat
                             </span></i>
                 </marquee>
             </div>
@@ -20,7 +19,7 @@
             <a href="index.blade.php" class="logo d-flex align-items-center me-auto">
                 <!-- Uncomment the line below if you also wish to use an image logo -->
                 <!-- <img src="assets/img/logo.png" alt=""> -->
-                <h1 class="sitename">SIMANTAN</h1>
+                <h1 class="sitename">SISEHAT</h1>
             </a>
 
             <nav id="navmenu" class="navmenu">
@@ -29,11 +28,10 @@
 
                     <li><a href="{{ url('/home') }}" class="active">Home<br></a></li>
                     <li><a href="{{ url('/gallery') }}">Gallery</a></li>
-                    <li><a href="{{ url('/satgas') }}">Satgas</a></li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
-            <a class="cta-btn d-none d-sm-block" href="{{ url('/pegawai/login') }}">Login</a>
+            <a class="cta-btn d-none d-sm-block" href="{{ url('/masyarakat/login') }}">Login</a>
 
         </div>
 

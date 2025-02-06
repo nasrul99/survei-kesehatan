@@ -40,7 +40,7 @@ class RoleAndPermissionSeeder extends Seeder
         // CREATE ROLES
         $superAdminRole = Role::create(['name' => 'Super Admin']);
 
-        $pegawaiRole = Role::create(['name' => 'Pegawai']);
+        $masyarakatRole = Role::create(['name' => 'Masyarakat']);
 
         // CREATE USERS
         User::create([
@@ -48,7 +48,7 @@ class RoleAndPermissionSeeder extends Seeder
             'is_admin' => true,
             'email' => 'superadmin@nurulfikri.ac.id',
             'email_verified_at' => now(),
-            'password' => Hash::make('super!@#'),
+            'password' => Hash::make('superadmin!@#'),
             'remember_token' => Str::random(10),
         ])->assignRole($superAdminRole);
 
@@ -57,9 +57,9 @@ class RoleAndPermissionSeeder extends Seeder
             'is_admin' => false,
             'email' => 'nasrul@nurulfikri.ac.id',
             'email_verified_at' => now(),
-            'password' => Hash::make('nasrul123!'),
+            'password' => Hash::make('nasrul!@#'),
             'remember_token' => Str::random(10),
-        ])->assignRole($pegawaiRole);
+        ])->assignRole($masyarakatRole);
 
 
     }

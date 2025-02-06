@@ -30,16 +30,11 @@ class Kolesterol extends Model
     ];
 
     protected $table = 'kolesterol';
-    protected $fillable = ['periode_id', 'tanggal', 'pegawai_id', 'hasil', 'status', 'rekomendasi_id'];
+    protected $fillable = ['tanggal', 'masyarakat_id', 'hasil', 'status', 'rekomendasi_id'];
 
-    public function pegawai(): BelongsTo
+    public function masyarakat(): BelongsTo
     {
-        return $this->belongsTo(Pegawai::class);
-    }
-
-    public function periode(): BelongsTo
-    {
-        return $this->belongsTo(Periode::class);
+        return $this->belongsTo(Masyarakat::class);
     }
 
     public function rekomendasi(): BelongsTo
@@ -52,5 +47,18 @@ class Kolesterol extends Model
         return 'Kolesterol'; // Mengembalikan nama pemeriksaan
     }
 
+    public static function setStatusFromValue($hasil)
+    {
+        return $hasil <= 200 ? self::NORMAL : self::TINGGI;
+    }
+
+    public static function setRekomendasiFromValue($status)
+    {
+        $rekomendasi = Rekomendasi::where('nama_pemeriksaan', 'Kolesterol')
+            ->where('status', $status)
+            ->first();
+
+        return $rekomendasi ? $rekomendasi->id : null;
+    }
 
 }

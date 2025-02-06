@@ -31,25 +31,62 @@ class AsamUrat extends Model
         self::TINGGI => 'heroicon-m-arrow-up-circle',
     ];
     protected $table = 'asam_urat';
-    protected $fillable = ['periode_id', 'tanggal', 'pegawai_id', 'hasil', 'status', 'rekomendasi_id'];
+    protected $fillable = ['tanggal', 'masyarakat_id', 'hasil', 'status', 'rekomendasi_id'];
 
     public function getPemeriksaanAttribute()
     {
         return 'Asam Urat'; // Mengembalikan nama pemeriksaan
     }
-    
-    public function pegawai(): BelongsTo
-    {
-        return $this->belongsTo(Pegawai::class);
-    }
 
-    public function periode(): BelongsTo
+    public function masyarakat(): BelongsTo
     {
-        return $this->belongsTo(Periode::class);
+        return $this->belongsTo(Masyarakat::class);
     }
 
     public function rekomendasi(): BelongsTo
     {
         return $this->belongsTo(Rekomendasi::class);
     }
+
+    public function setStatus()
+    {
+        // Pastikan masyarakat tidak null sebelum mengakses gender
+        if (!$this->masyarakat) {
+            throw new \Exception("Data masyarakat tidak ditemukan");
+        }
+
+        $gender = $this->masyarakat->gender; // Ambil gender dari tabel masyarakat
+        $hasil = $this->hasil; // Ambil hasil dari form
+
+        if ($gender == 'L') { // Jika laki-laki
+            if ($hasil < 3.4) $this->status = self::RENDAH;
+            else if ($hasil >= 3.4 && $hasil <= 7.0) $this->status = self::NORMAL;
+            else $this->status = self::TINGGI;
+        } else { // Jika perempuan
+            if ($hasil < 2.4) $this->status = self::RENDAH;
+            else if ($hasil >= 2.4 && $hasil <= 6.0) $this->status = self::NORMAL;
+            else $this->status = self::TINGGI;
+        }
+
+        return $this->status; // Kembalikan status agar bisa digunakan di tempat lain
+    }
+
+    public function setRekomendasi()
+    {
+        if (!$this->status) {
+            throw new \Exception("Status belum ditentukan, tidak bisa mencari rekomendasi.");
+        }
+
+        $rekomendasi = Rekomendasi::query()
+            ->where('nama_pemeriksaan', 'Asam Urat')
+            ->where('status', $this->status)
+            ->first();
+
+        // Jika tidak ada rekomendasi yang cocok, beri nilai default (null atau id tertentu)
+        $this->rekomendasi_id = $rekomendasi ? $rekomendasi->id : null;
+
+        return $this->rekomendasi_id; // Kembalikan ID rekomendasi agar bisa digunakan di tempat lain
+    }
+
+
 }

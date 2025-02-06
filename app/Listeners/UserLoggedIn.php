@@ -3,7 +3,6 @@
 namespace App\Listeners;
 
 use App\Models\Masyarakat;
-use App\Models\Pegawai;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Auth\Events\Login;
@@ -24,18 +23,18 @@ class UserLoggedIn
     public function handle(Login $event): void
     {
         $user = $event->user;
-        if(!$user->hasAnyRole(['Super Admin','Pegawai'])){
-            $user->assignRole('Pegawai');
+        if (!$user->hasAnyRole(['Super Admin', 'Masyarakat'])) {
+            $user->assignRole('Masyarakat');
         }
 
         //cek data masyarakat
-        if($user->hasRole('Pegawai')){
-            $pegawai = Pegawai::with('user')->where('user_id', $user->id)->first();
-            if(!$pegawai){
-                $pegawai = new Pegawai();
-                $pegawai->nama = $user->name;
-                $pegawai->user_id = $user->id;
-                $pegawai->save();
+        if ($user->hasRole('Masyarakat')) {
+            $masyarakat = Masyarakat::with('user')->where('user_id', $user->id)->first();
+            if (!$masyarakat) {
+                $masyarakat = new Masyarakat();
+                $masyarakat->nama = $user->name;
+                $masyarakat->user_id = $user->id;
+                $masyarakat->save();
             }
         }
 

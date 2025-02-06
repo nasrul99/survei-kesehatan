@@ -1,5 +1,7 @@
 <?php
 
+use App\Filament\Masyarakat\Pages\Auth\Register;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MasyarakatController;
 use App\Http\Controllers\UserController;
@@ -35,6 +37,13 @@ Route::get('/gallery', function () {
 Route::get('/satgas', function () {
     return view('medilab.satgas');
 });
+
+
+Route::get('/email/verify/{id}/{hash}', function (Request $request, Register $register) {
+    return $register->setValidatedEmail($request);
+})->name('verification.verify');
+
+
 
 
 

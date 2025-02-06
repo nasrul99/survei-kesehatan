@@ -15,6 +15,7 @@ class Dashboard extends BaseDashboard
 
     protected static ?string $navigationIcon = 'heroicon-o-home';
 
+    /*
     public function filtersForm(Form $form): Form
     {
         // Mengambil ID terakhir dari tabel Periode
@@ -34,4 +35,5 @@ class Dashboard extends BaseDashboard
 
             ]);
     }
+    */
 }

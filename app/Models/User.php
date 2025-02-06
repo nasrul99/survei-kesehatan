@@ -58,7 +58,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
 
     public function pegawai(): HasOne
     {
-        return $this->hasOne(Pegawai::class);
+        return $this->hasOne(Masyarakat::class);
     }
 
     public function canAccessPanel(Panel $panel): bool
@@ -66,7 +66,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         if ($panel->getId() === 'admin') {
             return $this->hasAnyRole(['Super Admin']);
         } else {
-            return $this->hasAnyRole(['Pegawai']);
+            return $this->hasAnyRole(['Masyarakat']);
         }
 
     }
