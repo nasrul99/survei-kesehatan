@@ -18,15 +18,16 @@ class PemeriksaanGulaDarahChart extends ChartWidget
         $masyarakat = Masyarakat::with('user')->where('user_id', auth()->id())->firstOrFail();
 
         // Mengambil data pemeriksaan gula darah untuk masyarakat yang sedang login
-        //$data = GulaDarah::select('periode.tahun', 'gula_darah.hasil', 'gula_darah.status')
-        $data = GulaDarah::select('gula_darah.hasil', 'gula_darah.status')
-            //->join('periode', 'periode.id', '=', 'gula_darah.periode_id')
+        $data = GulaDarah::select('gula_darah.tanggal', 'gula_darah.hasil', 'gula_darah.status')
             ->where('gula_darah.masyarakat_id', $masyarakat->id)
-            //->orderBy('periode.tahun')
+            ->orderBy('gula_darah.tanggal')
             ->get();
 
         // Memetakan data untuk grafik
-        $labels = $data->pluck('tahun'); // X-axis: tahun
+        $labels = $data->pluck('tanggal')->map(function ($date) {
+            return date('d-m-Y', strtotime($date));
+        }); // X-axis: tanggal pemeriksaan
+
         $statuses = $data->pluck('status'); // Tooltip: status
         $results = $data->pluck('hasil'); // Y-axis: hasil
 
@@ -55,13 +56,12 @@ class PemeriksaanGulaDarahChart extends ChartWidget
                     'tension' => 0.1, // Untuk kelenturan garis
                 ],
             ],
-            'labels' => $labels, // X-axis: tahun
-
+            'labels' => $labels, // X-axis: tanggal pemeriksaan
         ];
     }
 
     protected function getType(): string
     {
-        return 'bar';
+        return 'line';
     }
 }

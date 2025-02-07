@@ -18,15 +18,15 @@ class PemeriksaanKolesterolChart extends ChartWidget
         $masyarakat = Masyarakat::with('user')->where('user_id', auth()->id())->firstOrFail();
 
         // Mengambil data pemeriksaan kolesterol untuk masyarakat yang sedang login
-        //$data = Kolesterol::select('periode.tahun', 'kolesterol.hasil', 'kolesterol.status')
-        $data = Kolesterol::select('kolesterol.hasil', 'kolesterol.status')
-            //->join('periode', 'periode.id', '=', 'kolesterol.periode_id')
+        $data = Kolesterol::select('kolesterol.hasil', 'kolesterol.status', 'kolesterol.tanggal')
             ->where('kolesterol.masyarakat_id', $masyarakat->id)
-            //->orderBy('periode.tahun')
+            ->orderBy('kolesterol.tanggal')
             ->get();
 
         // Memetakan data untuk grafik
-        $labels = $data->pluck('tahun'); // X-axis: tahun
+        $labels = $data->pluck('tanggal')->map(function ($tanggal) {
+            return date('d-m-Y', strtotime($tanggal));
+        }); // X-axis: tanggal pemeriksaan
         $statuses = $data->pluck('status'); // Tooltip: status
         $results = $data->pluck('hasil'); // Y-axis: hasil
 
@@ -55,13 +55,13 @@ class PemeriksaanKolesterolChart extends ChartWidget
                     'tension' => 0.1, // Untuk kelenturan garis
                 ],
             ],
-            'labels' => $labels, // X-axis: tahun
+            'labels' => $labels, // X-axis: tanggal pemeriksaan
 
         ];
     }
 
     protected function getType(): string
     {
-        return 'bar';
+        return 'line';
     }
 }

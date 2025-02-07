@@ -4,6 +4,8 @@ namespace App\Filament\Masyarakat\Resources;
 
 use App\Filament\Masyarakat\Resources\TekananDarahResource\Pages;
 use App\Filament\Masyarakat\Resources\TekananDarahResource\RelationManagers;
+use App\Models\AsamUrat;
+use App\Models\Masyarakat;
 use App\Models\TekananDarah;
 use Carbon\Carbon;
 use Filament\Forms;
@@ -48,7 +50,13 @@ class TekananDarahResource extends Resource
 
     public static function table(Table $table): Table
     {
+        $masyarakat = Masyarakat::with('user')->where('user_id', auth()->id())->firstOrFail();
+
         return $table
+            ->query(
+                TekananDarah::query()
+                    ->where('masyarakat_id', '=', $masyarakat->id)
+            )
             ->defaultSort('id', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('tanggal')

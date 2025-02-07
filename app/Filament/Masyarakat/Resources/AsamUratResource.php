@@ -5,6 +5,7 @@ namespace App\Filament\Masyarakat\Resources;
 use App\Filament\Masyarakat\Resources\AsamUratResource\Pages;
 use App\Filament\Masyarakat\Resources\AsamUratResource\RelationManagers;
 use App\Models\AsamUrat;
+use App\Models\Masyarakat;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -50,7 +51,13 @@ class AsamUratResource extends Resource
 
     public static function table(Table $table): Table
     {
+        $masyarakat = Masyarakat::with('user')->where('user_id', auth()->id())->firstOrFail();
+
         return $table
+            ->query(
+                AsamUrat::query()
+                    ->where('masyarakat_id', '=', $masyarakat->id)
+            )
             ->defaultSort('id', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('tanggal')

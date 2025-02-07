@@ -14,24 +14,25 @@ class PemeriksaanTekananDarahChart extends ChartWidget
 
     protected function getData(): array
     {
-// Mendapatkan masyarakat yang sedang login
+        // Mendapatkan masyarakat yang sedang login
         $masyarakat = Masyarakat::with('user')->where('user_id', auth()->id())->firstOrFail();
 
-// Mengambil data pemeriksaan tekanan darah untuk masyarakat yang sedang login
-        //$data = TekananDarah::select('periode.tahun', 'tekanan_darah.sistole', 'tekanan_darah.diastole', 'tekanan_darah.status')
-        $data = TekananDarah::select('tekanan_darah.sistole', 'tekanan_darah.diastole', 'tekanan_darah.status')
-            //->join('periode', 'periode.id', '=', 'tekanan_darah.periode_id')
+        // Mengambil data pemeriksaan tekanan darah untuk masyarakat yang sedang login
+        $data = TekananDarah::select('tekanan_darah.sistole', 'tekanan_darah.diastole', 'tekanan_darah.status', 'tekanan_darah.tanggal')
             ->where('tekanan_darah.masyarakat_id', $masyarakat->id)
-            //->orderBy('periode.tahun')
+            ->orderBy('tekanan_darah.tanggal')
             ->get();
 
-// Memetakan data untuk grafik
-        $labels = $data->pluck('tahun'); // X-axis: tahun
+        // Memetakan data untuk grafik
+        $labels = $data->pluck('tanggal')->map(function ($tanggal) {
+            return $tanggal;
+        }); // X-axis: tahun (diambil dari tanggal)
+
         $sistoleResults = $data->pluck('sistole'); // Y-axis: hasil untuk sistole
         $diastoleResults = $data->pluck('diastole'); // Y-axis: hasil untuk diastole
         $statuses = $data->pluck('status'); // Tooltip: status
 
-// Mengatur warna berdasarkan status untuk sistole
+        // Mengatur warna berdasarkan status untuk sistole
         $sistoleBackgroundColors = $statuses->map(function ($status) {
             return $status === 'Tinggi' ? 'rgba(255, 0, 0, 0.2)' :
                 ($status === 'Normal' ? 'rgba(0, 180, 0, 0.2)' : // Variasi warna normal
@@ -44,7 +45,7 @@ class PemeriksaanTekananDarahChart extends ChartWidget
                     'rgba(255, 165, 0, 1)'); // Rendah
         });
 
-// Mengatur warna berdasarkan status untuk diastole
+        // Mengatur warna berdasarkan status untuk diastole
         $diastoleBackgroundColors = $statuses->map(function ($status) {
             return $status === 'Tinggi' ? 'rgba(255, 128, 128, 0.2)' : // Variasi warna untuk Tinggi
                 ($status === 'Normal' ? 'rgba(0, 255, 0, 0.2)' : // Variasi warna normal
@@ -84,6 +85,6 @@ class PemeriksaanTekananDarahChart extends ChartWidget
 
     protected function getType(): string
     {
-        return 'bar'; // Tipe grafik bar
+        return 'line'; // Tipe grafik bar
     }
 }

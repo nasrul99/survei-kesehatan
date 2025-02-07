@@ -5,6 +5,7 @@ namespace App\Filament\Masyarakat\Resources;
 use App\Filament\Masyarakat\Resources\FisikResource\Pages;
 use App\Filament\Masyarakat\Resources\FisikResource\RelationManagers;
 use App\Models\Fisik;
+use App\Models\Masyarakat;
 use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -56,7 +57,13 @@ class FisikResource extends Resource
 
     public static function table(Table $table): Table
     {
+        $masyarakat = Masyarakat::with('user')->where('user_id', auth()->id())->firstOrFail();
+
         return $table
+            ->query(
+                Fisik::query()
+                    ->where('masyarakat_id', '=', $masyarakat->id)
+            )
             ->defaultSort('id', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('tanggal')

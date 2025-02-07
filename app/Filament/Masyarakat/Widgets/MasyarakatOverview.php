@@ -9,26 +9,24 @@ use Carbon\Carbon;
 
 class MasyarakatOverview extends BaseWidget
 {
-    /*
     protected function getStats(): array
     {
-
         // Mengambil data masyarakat yang terhubung dengan user yang sedang login
         $peg = Masyarakat::with([
             'asam_urat' => function ($query) {
-                $query->latest('periode_id');
+                $query->latest('tanggal');
             },
             'kolesterol' => function ($query) {
-                $query->latest('periode_id');
+                $query->latest('tanggal');
             },
             'tekanan_darah' => function ($query) {
-                $query->latest('periode_id');
+                $query->latest('tanggal');
             },
             'gula_darah' => function ($query) {
-                $query->latest('periode_id');
+                $query->latest('tanggal');
             },
             'fisik' => function ($query) {
-                $query->latest('periode_id'); // Mengambil periode_id terakhir dari tabel fisik
+                $query->latest('tanggal'); // Mengambil data berdasarkan tanggal terakhir
             }
         ])->where('user_id', auth()->id())->firstOrFail();
 
@@ -73,7 +71,5 @@ class MasyarakatOverview extends BaseWidget
                 ->descriptionIcon('heroicon-o-beaker')
                 ->color($gulaDarah && $gulaDarah->status === 'Normal' ? 'success' : 'danger'),
         ];
-
     }
-    */
 }

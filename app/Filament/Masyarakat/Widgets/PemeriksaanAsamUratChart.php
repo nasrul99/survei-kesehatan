@@ -18,15 +18,15 @@ class PemeriksaanAsamUratChart extends ChartWidget
         $masyarakat = Masyarakat::with('user')->where('user_id', auth()->id())->firstOrFail();
 
         // Mengambil data pemeriksaan asam urat untuk masyarakat yang sedang login
-        //$data = AsamUrat::select('periode.tahun', 'asam_urat.hasil', 'asam_urat.status')
-        $data = AsamUrat::select('asam_urat.hasil', 'asam_urat.status')
-            //->join('periode', 'periode.id', '=', 'asam_urat.periode_id')
+        $data = AsamUrat::select('asam_urat.hasil', 'asam_urat.status', 'asam_urat.tanggal')
             ->where('asam_urat.masyarakat_id', $masyarakat->id)
-            //->orderBy('periode.tahun')
+            ->orderBy('asam_urat.tanggal', 'asc')
             ->get();
 
         // Memetakan data untuk grafik
-        $labels = $data->pluck('tahun'); // X-axis: tahun
+        $labels = $data->pluck('tanggal')->map(function ($tanggal) {
+            return date('d-m-Y', strtotime($tanggal));
+        }); // X-axis: tanggal pemeriksaan
         $statuses = $data->pluck('status'); // Tooltip: status
         $results = $data->pluck('hasil'); // Y-axis: hasil
 
@@ -55,13 +55,12 @@ class PemeriksaanAsamUratChart extends ChartWidget
                     'tension' => 0.1, // Untuk kelenturan garis
                 ],
             ],
-            'labels' => $labels, // X-axis: tahun
-
+            'labels' => $labels, // X-axis: tanggal pemeriksaan
         ];
     }
 
     protected function getType(): string
     {
-        return 'bar';
+        return 'line';
     }
 }

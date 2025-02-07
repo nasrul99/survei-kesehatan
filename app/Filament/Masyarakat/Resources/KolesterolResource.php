@@ -5,6 +5,7 @@ namespace App\Filament\Masyarakat\Resources;
 use App\Filament\Masyarakat\Resources\KolesterolResource\Pages;
 use App\Filament\Masyarakat\Resources\KolesterolResource\RelationManagers;
 use App\Models\Kolesterol;
+use App\Models\Masyarakat;
 use Carbon\Carbon;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -47,7 +48,13 @@ class KolesterolResource extends Resource
 
     public static function table(Table $table): Table
     {
+        $masyarakat = Masyarakat::with('user')->where('user_id', auth()->id())->firstOrFail();
+
         return $table
+            ->query(
+                Kolesterol::query()
+                    ->where('masyarakat_id', '=', $masyarakat->id)
+            )
             ->defaultSort('id', 'desc')
             ->columns([
                 Tables\Columns\TextColumn::make('tanggal')
