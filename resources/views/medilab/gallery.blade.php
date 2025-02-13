@@ -5,7 +5,7 @@
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
             <h2>Gallery</h2>
-            <p>Foto-Foto Kegiatan Skrining Kesehatan Pegawai STT-NF dan NF Academy</p>
+            <p>Info Grafis Kesehatan bagi Masyarakat</p>
         </div><!-- End Section Title -->
 
         <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">

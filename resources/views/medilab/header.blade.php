@@ -24,10 +24,9 @@
 
             <nav id="navmenu" class="navmenu">
                 <ul>
-
-
-                    <li><a href="{{ url('/home') }}" class="active">Home<br></a></li>
-                    <li><a href="{{ url('/gallery') }}">Gallery</a></li>
+                    <li><a href="{{ url('/home') }}" class="{{ Request::is('home') ? 'active' : '' }}">Home</a></li>
+                    <li><a href="{{ url('/gallery') }}" class="{{ Request::is('gallery') ? 'active' : '' }}">Gallery</a>
+                    </li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>

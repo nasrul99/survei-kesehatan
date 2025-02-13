@@ -76,6 +76,7 @@ class AsamUratResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('rekomendasi.rekomendasi_status')
                     ->numeric()
+                    ->html()
                     ->searchable()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')

@@ -55,11 +55,10 @@
                                         memungkinkan manajemen
                                         untuk mengambil keputusan berbasis data terkait kesehatan karyawan. SISEHAT
                                         menyediakan
-                                        antarmuka yang mudah digunakan untuk petugas medis dan HR, sehingga mereka dapat
+                                        antarmuka yang mudah digunakan untuk petugas medis dan pihak terkait, sehingga
+                                        mereka dapat
                                         melacak
-                                        perkembangan kesehatan individu maupun kelompok dengan lebih efisien.
-
-
+                                        perkembangan kesehatan masyarakat dengan lebih efisien.
                                     </p>
                                 </div>
                             </div><!-- End Icon Box -->
