@@ -4,8 +4,8 @@
 
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
-            <h2>Gallery</h2>
-            <p>Info Grafis Kesehatan bagi Masyarakat</p>
+            <h2>Informasi Kesehatan Masyarakat</h2>
+            <p>Info Grafis Informasi Kesehatan bagi Masyarakat dari Kementerian Kesehatan RI</p>
         </div><!-- End Section Title -->
 
         <div class="container-fluid" data-aos="fade-up" data-aos-delay="100">

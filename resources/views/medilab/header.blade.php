@@ -5,7 +5,7 @@
             <div class="contact-info d-flex align-items-center">
                 <marquee>
                     <i class="d-flex align-items-center ms-4"><span>
-                            Selamat Datang di Aplikasi SISEHAT - Sistem Informasi Survei Kesehatan Masyarakat
+                            Selamat Datang di Aplikasi SISEHAT - Sistem Informasi Kesehatan Masyarakat
                             </span></i>
                 </marquee>
             </div>
@@ -25,7 +25,8 @@
             <nav id="navmenu" class="navmenu">
                 <ul>
                     <li><a href="{{ url('/home') }}" class="{{ Request::is('home') ? 'active' : '' }}">Home</a></li>
-                    <li><a href="{{ url('/gallery') }}" class="{{ Request::is('gallery') ? 'active' : '' }}">Gallery</a>
+                    <li><a href="{{ url('/gallery') }}" class="{{ Request::is('gallery') ? 'active' : '' }}">Info
+                            Kesehatan</a>
                     </li>
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>

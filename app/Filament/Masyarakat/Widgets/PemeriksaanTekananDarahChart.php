@@ -85,6 +85,6 @@ class PemeriksaanTekananDarahChart extends ChartWidget
 
     protected function getType(): string
     {
-        return 'line'; // Tipe grafik bar
+        return 'bar'; // Tipe grafik bar
     }
 }

@@ -37,10 +37,10 @@ class MasyarakatTable extends BaseWidget
                     ->label('Gender')
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('divisi.nama')
-                    ->label('Divisi')
-                    ->sortable()
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('umur')
+                    ->numeric()
+                    ->searchable()
+                    ->sortable(),
                 /*
                 Tables\Columns\TextColumn::make('fisik.tinggi_badan')
                     ->label('Tinggi Badan')
@@ -63,69 +63,49 @@ class MasyarakatTable extends BaseWidget
                     //->getStateUsing(fn($record) => $record->fisik()->latest('periode_id')->first()?->kondisi_fisik)
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('asam_urat.hasil')
+
+                Tables\Columns\TextColumn::make('asam_urat')
                     ->label('Asam Urat')
-                    //->getStateUsing(fn($record) => $record->asam_urat()->latest('periode_id')->first()?->hasil)
-                    ->sortable()
-                    ->searchable(),
+                    ->getStateUsing(function ($record) {
+                        $asamUrat = $record->asam_urat()->latest('created_at')->first(); // Menggunakan created_at sebagai alternatif
+                        return $asamUrat ? $asamUrat->hasil . ' (' . $asamUrat->status . ')' : '-';
+                    })
+                    ->sortable(),
 
-                Tables\Columns\TextColumn::make('asam_urat.status')
-                    ->label('Status')
-                    //->getStateUsing(fn($record) => $record->asam_urat()->latest('periode_id')->first()?->status)
-                    ->sortable()
-                    ->searchable(),
-
-                Tables\Columns\TextColumn::make('kolesterol.hasil')
+                Tables\Columns\TextColumn::make('kolesterol')
                     ->label('Kolesterol Total')
-                    ->sortable()
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('kolesterol.status')
-                    ->label('Status')
-                    ->sortable()
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('gula_darah.hasil')
+                    ->getStateUsing(function ($record) {
+                        $kolesterol = $record->kolesterol()->latest('created_at')->first(); // Ambil data terbaru berdasarkan created_at
+                        return $kolesterol ? $kolesterol->hasil . ' (' . $kolesterol->status . ')' : '-';
+                    })
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('gula_darah')
                     ->label('Gula Darah')
-                    //->getStateUsing(fn($record) => $record->gula_darah()->latest('periode_id')->first()?->hasil)
-                    ->sortable()
-                    ->searchable(),
+                    ->getStateUsing(function ($record) {
+                        $gulaDarah = $record->gula_darah()->latest('created_at')->first(); // Ambil data terbaru berdasarkan created_at
+                        return $gulaDarah ? $gulaDarah->hasil . ' (' . $gulaDarah->status . ')' : '-';
+                    })
+                    ->sortable(),
 
-                Tables\Columns\TextColumn::make('gula_darah.status')
-                    ->label('Status')
-                    //->getStateUsing(fn($record) => $record->gula_darah()->latest('periode_id')->first()?->status)
-                    ->sortable()
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('kolesterol.hasil')
+                Tables\Columns\TextColumn::make('kolesterol')
                     ->label('Kolesterol')
-                    //->getStateUsing(fn($record) => $record->kolesterol()->latest('periode_id')->first()?->hasil)
-                    ->sortable()
-                    ->searchable(),
+                    ->getStateUsing(function ($record) {
+                        $kolesterol = $record->kolesterol()->latest('created_at')->first(); // Ambil data terbaru berdasarkan created_at
+                        return $kolesterol ? $kolesterol->hasil . ' (' . $kolesterol->status . ')' : '-';
+                    })
+                    ->sortable(),
 
-                Tables\Columns\TextColumn::make('kolesterol.status')
-                    ->label('Status')
-                    //->getStateUsing(fn($record) => $record->kolesterol()->latest('periode_id')->first()?->status)
-                    ->sortable()
-                    ->searchable(),
-
-
-                Tables\Columns\TextColumn::make('tekanan_darah.sistole')
+                Tables\Columns\TextColumn::make('tekanan_darah')
                     ->label('Tekanan Darah')
-//                    ->getStateUsing(function ($record) {
-//                        $tekanan_darah = $record->tekanan_darah()->latest('periode_id')->first();
-//                        if ($tekanan_darah && $tekanan_darah->sistole && $tekanan_darah->diastole) {
-//                            return $tekanan_darah->sistole . '/' . $tekanan_darah->diastole;
-//                        }
-//                        return null; // Jika salah satu tidak ada, kembalikan null (kosong)
-//                    })
-                    ->sortable()
-                    ->searchable(),
-
-
-                Tables\Columns\TextColumn::make('tekanan_darah.status')
-                    ->label('Status')
-                    //->getStateUsing(fn($record) => $record->tekanan_darah()->latest('periode_id')->first()?->status)
-                    ->sortable()
-                    ->searchable(),
-
+                    ->getStateUsing(function ($record) {
+                        $tekanan_darah = $record->tekanan_darah()->latest('created_at')->first(); // Ambil data terbaru
+                        if ($tekanan_darah && $tekanan_darah->sistole && $tekanan_darah->diastole) {
+                            return "{$tekanan_darah->sistole}/{$tekanan_darah->diastole} ({$tekanan_darah->status})";
+                        }
+                        return '-'; // Jika tidak ada data
+                    })
+                    ->sortable(),
 
             ]);
     }
