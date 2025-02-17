@@ -31,7 +31,7 @@
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
-            <a class="cta-btn d-none d-sm-block" href="{{ url('/masyarakat/login') }}">Login</a>
+            <a class="cta-btn d-sm-block" href="{{ url('/masyarakat/login') }}">Login</a>
 
         </div>
 
