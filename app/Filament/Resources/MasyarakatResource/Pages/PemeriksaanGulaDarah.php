@@ -14,6 +14,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use phpseclib3\Exception\BadConfigurationException;
+use Carbon\Carbon;
+
 
 class PemeriksaanGulaDarah extends ManageRelatedRecords
 {
@@ -40,13 +42,6 @@ class PemeriksaanGulaDarah extends ManageRelatedRecords
             ->schema([
                 Forms\Components\Section::make()
                     ->schema([
-                        Forms\Components\Select::make('periode_id')
-                            ->label('Periode')
-                            ->preload()
-                            ->searchable()
-                            ->native(false)
-                            ->relationship('periode', 'tahun')
-                            ->required(),
                         Forms\Components\DatePicker::make('tanggal')
                             ->label('Tanggal Pemeriksaan')
                             ->prefixIcon('heroicon-m-calendar-days')
@@ -77,9 +72,11 @@ class PemeriksaanGulaDarah extends ManageRelatedRecords
             ->defaultSort('id', 'desc')
             ->recordTitleAttribute('tanggal')
             ->columns([
-                Tables\Columns\TextColumn::make('periode.tahun')
-                    ->label('Tahun')
-                    ->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('tanggal')
+                    ->label('Tanggal')
+                    ->searchable()
+                    ->sortable()
+                    ->formatStateUsing(fn($state) => \Carbon\Carbon::parse($state)->translatedFormat('d-m-Y')),
                 Tables\Columns\TextColumn::make('jenis')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('hasil')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('status')->searchable()->sortable(),

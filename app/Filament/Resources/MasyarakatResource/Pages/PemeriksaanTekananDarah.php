@@ -12,6 +12,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Carbon\Carbon;
+
 
 class PemeriksaanTekananDarah extends ManageRelatedRecords
 {
@@ -37,13 +39,7 @@ class PemeriksaanTekananDarah extends ManageRelatedRecords
             ->schema([
                 Forms\Components\Section::make()
                     ->schema([
-                        Forms\Components\Select::make('periode_id')
-                            ->label('Periode')
-                            ->preload()
-                            ->searchable()
-                            ->native(false)
-                            ->relationship('periode', 'tahun')
-                            ->required(),
+
                         Forms\Components\DatePicker::make('tanggal')
                             ->label('Tanggal Pemeriksaan')
                             ->prefixIcon('heroicon-m-calendar-days')
@@ -74,9 +70,11 @@ class PemeriksaanTekananDarah extends ManageRelatedRecords
             ->defaultSort('id', 'desc')
             ->recordTitleAttribute('tanggal')
             ->columns([
-                Tables\Columns\TextColumn::make('periode.tahun')
-                    ->label('Tahun')
-                    ->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('tanggal')
+                    ->label('Tanggal')
+                    ->searchable()
+                    ->sortable()
+                    ->formatStateUsing(fn($state) => \Carbon\Carbon::parse($state)->translatedFormat('d-m-Y')),
                 Tables\Columns\TextColumn::make('sistole')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('diastole')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('status')->searchable()->sortable(),

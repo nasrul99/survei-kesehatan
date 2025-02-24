@@ -60,7 +60,10 @@ class MasyarakatTable extends BaseWidget
                   */
                 Tables\Columns\TextColumn::make('fisik.kondisi_fisik')
                     ->label('Kondisi Fisik')
-                    //->getStateUsing(fn($record) => $record->fisik()->latest('periode_id')->first()?->kondisi_fisik)
+                    ->getStateUsing(function ($record) {
+                        $fisikTerakhir = $record->fisik()->latest('created_at')->first(); // Menggunakan created_at sebagai alternatif
+                        return $fisikTerakhir ? $fisikTerakhir->kondisi_fisik : '-';
+                    })
                     ->sortable()
                     ->searchable(),
 
