@@ -11,6 +11,8 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Carbon\Carbon;
+
 
 class PemeriksaanFisik extends ManageRelatedRecords
 {
@@ -37,13 +39,6 @@ class PemeriksaanFisik extends ManageRelatedRecords
             ->schema([
                 Forms\Components\Section::make()
                     ->schema([
-                        Forms\Components\Select::make('periode_id')
-                            ->label('Periode')
-                            ->preload()
-                            ->searchable()
-                            ->native(false)
-                            ->relationship('periode', 'tahun')
-                            ->required(),
                         Forms\Components\DatePicker::make('tanggal')
                             ->label('Tanggal Pemeriksaan')
                             ->prefixIcon('heroicon-m-calendar-days')
@@ -73,9 +68,11 @@ class PemeriksaanFisik extends ManageRelatedRecords
             ->defaultSort('id', 'desc')
             ->recordTitleAttribute('tanggal')
             ->columns([
-                Tables\Columns\TextColumn::make('periode.tahun')
-                    ->label('Tahun')
-                    ->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('tanggal')
+                    ->label('Tanggal')
+                    ->searchable()
+                    ->sortable()
+                    ->formatStateUsing(fn($state) => \Carbon\Carbon::parse($state)->translatedFormat('d-m-Y')),
                 Tables\Columns\TextColumn::make('tinggi_badan')
                     ->label('Tinggi Badan')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('berat_badan')

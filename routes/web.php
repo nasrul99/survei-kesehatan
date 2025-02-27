@@ -34,8 +34,8 @@ Route::get('/gallery', function () {
     return view('medilab.gallery');
 });
 
-Route::get('/satgas', function () {
-    return view('medilab.satgas');
+Route::get('/privasi', function () {
+    return view('medilab.privasi');
 });
 
 

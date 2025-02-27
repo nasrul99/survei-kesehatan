@@ -28,6 +28,9 @@
                     <li><a href="{{ url('/gallery') }}" class="{{ Request::is('gallery') ? 'active' : '' }}">Info
                             Kesehatan</a>
                     </li>
+                    <li><a href="{{ url('/privasi') }}" class="{{ Request::is('privasi') ? 'active' : '' }}">Privasi &
+                            Keamanan</a></li>
+
                 </ul>
                 <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
             </nav>
